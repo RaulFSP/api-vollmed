@@ -1,13 +1,9 @@
-package io.github.app.domain.medico;
-
-import java.util.Objects;
+package io.github.app.domain.paciente;
 
 import io.github.app.domain.endereco.Endereco;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,60 +13,46 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 
 @Entity
-@Table(name = "medicos")
-public class Medico {
-
+@Table(name = "pacientes")
+public class Paciente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	@Column(nullable = false, length = 100)
 	private String nome;
+
 	@Column(nullable = false)
 	private String email;
+
 	@Column(nullable = false)
-	private String crm;
-	@Enumerated(EnumType.STRING)
-	private Especialidade especialidade;
+	private String cpf;
+
 	@Column(nullable = false)
 	private String telefone;
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "endereco_id", nullable = false)
 	private Endereco endereco;
-	@Column(nullable = false)
-	private Boolean ativo;
+
 	@Version
 	private Long version;
 
-	public Medico() {
+	public Paciente() {
 	}
 
-	private Medico(
-			Builder builder) {
+	private Paciente(Builder builder) {
 		this.id = builder.id;
 		this.nome = builder.nome;
 		this.email = builder.email;
-		this.crm = builder.crm;
-		this.especialidade = builder.especialidade;
-		this.endereco = builder.endereco;
+		this.cpf = builder.cpf;
 		this.telefone = builder.telefone;
-		this.ativo = builder.ativo;
+		this.endereco = builder.endereco;
 		this.version = builder.version;
 	}
 
 	public Long getId() {
 		return id;
-	}
-
-	public Boolean getAtivo() {
-		return ativo;
-	}
-
-	public Long getVersion() {
-		return version;
-	}
-
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
 	}
 
 	public void setId(Long id) {
@@ -93,12 +75,12 @@ public class Medico {
 		this.email = email;
 	}
 
-	public String getCrm() {
-		return crm;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setCrm(String crm) {
-		this.crm = crm;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public String getTelefone() {
@@ -109,14 +91,6 @@ public class Medico {
 		this.telefone = telefone;
 	}
 
-	public Especialidade getEspecialidade() {
-		return especialidade;
-	}
-
-	public void setEspecialidade(Especialidade especialidade) {
-		this.especialidade = especialidade;
-	}
-
 	public Endereco getEndereco() {
 		return endereco;
 	}
@@ -125,84 +99,59 @@ public class Medico {
 		this.endereco = endereco;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
+	public Long getVersion() {
+		return version;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Medico other = (Medico) obj;
-		return Objects.equals(id, other.id);
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 
-	public static Builder builder() {
+	public static Builder build() {
 		return new Builder();
 	}
-
+	
 	public static class Builder {
+
 		private Long id;
 		private String nome;
 		private String email;
-		private String crm;
-		private Especialidade especialidade;
-		private Endereco endereco;
+		private String cpf;
 		private String telefone;
-		private Boolean ativo;
+		private Endereco endereco;
 		private Long version;
-
+		
 		public Builder id(Long id) {
 			this.id = id;
-			return this;
-		}
-		public Builder version(Long version) {
-			this.version = version;
 			return this;
 		}
 		public Builder nome(String nome) {
 			this.nome = nome;
 			return this;
 		}
-
 		public Builder email(String email) {
 			this.email = email;
 			return this;
 		}
-
-		public Builder crm(String crm) {
-			this.crm = crm;
+		public Builder cpf(String cpf) {
+			this.cpf = cpf;
 			return this;
 		}
-
-		public Builder especialidade(Especialidade especialidade) {
-			this.especialidade = especialidade;
-			return this;
-		}
-
-		public Builder endereco(Endereco endereco) {
-			this.endereco = endereco;
-			return this;
-		}
-
 		public Builder telefone(String telefone) {
 			this.telefone = telefone;
 			return this;
 		}
-
-		public Builder ativo(Boolean ativo) {
-			this.ativo = ativo;
+		public Builder endereco(Endereco endereco) {
+			this.endereco = endereco;
 			return this;
 		}
-
-		public Medico build() {
-			return new Medico(this);
+		public Builder version(Long version) {
+			this.version = version;
+			return this;
 		}
+		public Paciente build() {
+			return new Paciente(this);
+		}
+		
 	}
-
 }
